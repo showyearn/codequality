@@ -4,8 +4,6 @@
 package com.codequality.unittest.junit.mockito.web;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
@@ -15,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.codequality.unittest.junit.mockito.service.FinalService;
-import com.codequality.unittest.junit.mockito.service.NewService;
 import com.codequality.unittest.junit.mockito.service.NormalService;
 
 /**

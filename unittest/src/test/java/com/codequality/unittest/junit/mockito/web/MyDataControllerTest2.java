@@ -3,7 +3,7 @@
  */
 package com.codequality.unittest.junit.mockito.web;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
@@ -11,15 +11,23 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 
 import com.codequality.unittest.junit.mockito.service.FinalService;
+import com.codequality.unittest.junit.mockito.service.NewService;
 import com.codequality.unittest.junit.mockito.service.NormalService;
+import com.codequality.unittest.junit.mockito.service.StaticService;
 
 /**
  * @author qiuquanying
  *
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
+@PowerMockRunnerDelegate(MockitoJUnitRunner.class)
+@PrepareForTest({ MyDataController.class, StaticService.class })
 public class MyDataControllerTest2 {
 	private static final String DATA_OK = "ok";
 	private static final String DATA_NO = "no";
@@ -33,35 +41,13 @@ public class MyDataControllerTest2 {
 	NormalService normalService;
 
 	@Test
-	public void buildAll_final() {
-		when(normalService.buildData()).thenReturn(null);
-		when(finalService.buildData()).thenReturn(DATA_NO);
-
-		String result = myDataController.buildAll();
-		assertEquals(DATA_NO, result);
-	}
-
-	@Test
-	public void buildAll_normal() {
+	public void testNew() throws Exception {
 		when(normalService.buildData()).thenReturn(DATA_OK);
 
-		String result = myDataController.buildAll();
-		assertEquals(DATA_OK, result);
-	}
+		NewService newService = new NewService();
+		newService.setData(DATA_NO);
+		PowerMockito.whenNew(NewService.class).withAnyArguments().thenReturn(newService);
 
-	@Test
-	public void buildAll_new() {
-		when(normalService.buildData()).thenReturn(DATA_OK);
-
-//		NewService newService = mock(NewService.class);
-//		doReturn(DATA_NO).when(newService).buildData();
-		
-//		NewService newService = new NewService();
-//		NewService spy = spy(newService);
-//		doReturn(DATA_NO).when(spy).buildData();
-//		assertEquals(DATA_NO, newService.buildData());
-
-		String result = myDataController.buildAll();
-		assertEquals(DATA_OK, result);
+		assertThat(myDataController.buildAll()).as("NewService is not mocked").isEqualTo(DATA_NO);
 	}
 }
