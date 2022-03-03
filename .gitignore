@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 .classpath
+.project
+*.idea/
+*.iml
 
 # Log file
 *.log

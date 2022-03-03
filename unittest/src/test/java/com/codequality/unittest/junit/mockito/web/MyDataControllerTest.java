@@ -34,7 +34,6 @@ public class MyDataControllerTest {
 
 	@Test
 	public void buildAll_final() {
-		when(normalService.buildData()).thenReturn(null);
 		when(finalService.buildData()).thenReturn(DATA_NO);
 
 		String result = myDataController.buildAll();
@@ -44,22 +43,6 @@ public class MyDataControllerTest {
 	@Test
 	public void buildAll_normal() {
 		when(normalService.buildData()).thenReturn(DATA_OK);
-
-		String result = myDataController.buildAll();
-		assertEquals(DATA_OK, result);
-	}
-
-	@Test
-	public void buildAll_new() {
-		when(normalService.buildData()).thenReturn(DATA_OK);
-
-//		NewService newService = mock(NewService.class);
-//		doReturn(DATA_NO).when(newService).buildData();
-		
-//		NewService newService = new NewService();
-//		NewService spy = spy(newService);
-//		doReturn(DATA_NO).when(spy).buildData();
-//		assertEquals(DATA_NO, newService.buildData());
 
 		String result = myDataController.buildAll();
 		assertEquals(DATA_OK, result);

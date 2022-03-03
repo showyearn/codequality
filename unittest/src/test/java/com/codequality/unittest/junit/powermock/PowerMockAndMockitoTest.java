@@ -1,6 +1,7 @@
 package com.codequality.unittest.junit.powermock;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
@@ -41,6 +42,14 @@ public class PowerMockAndMockitoTest {
 	NewService newService;
 	@Mock
 	FinalService finalService;
+
+	@Test
+	public void testFinal() {
+		String value = "x";
+		FinalService finalService = PowerMockito.mock(FinalService.class);
+		PowerMockito.when(finalService.buildData()).thenReturn(value);
+		assertEquals(value, finalService.buildData());
+	}
 
 	@Test
 	public void testStatic() {
